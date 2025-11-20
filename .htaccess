@@ -1,0 +1,36 @@
+# Aktifkan Rewrite Engine
+RewriteEngine On
+
+# ----------------------------------------------------
+# 1. PENCEGAHAN AKSES (SECURITY)
+# ----------------------------------------------------
+
+# Mencegah akses langsung ke file konfigurasi dan helper
+# Walaupun kita sudah menggunakan PHP require/include, ini adalah lapisan keamanan tambahan
+RewriteRule ^(config|functions|includes)\/.*$ - [F,L]
+# [F] Forbidden - Mengembalikan error 403
+# [L] Last rule - Hentikan pemrosesan aturan
+
+# ----------------------------------------------------
+# 2. MENGHILANGKAN INDEX.PHP (CLEAN URL)
+# ----------------------------------------------------
+
+# Jika URL mengarah ke folder, otomatis mencari index.php di dalamnya
+DirectoryIndex index.php
+
+# ----------------------------------------------------
+# 3. URL REWRITING (SANGAT PENTING UNTUK CLEAN URL)
+# ----------------------------------------------------
+
+# Aturan 1: Pastikan file atau folder yang ada tidak di-rewrite
+# Jika permintaan adalah file yang ada (e.g., style.css, logo.png), jangan lakukan apa-apa
+RewriteCond %{REQUEST_FILENAME} !-f
+# Jika permintaan adalah folder yang ada (e.g., assets/), jangan lakukan apa-apa
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Aturan 2: Arahkan semua permintaan ke index.php
+# Semua permintaan yang tidak mengarah ke file atau folder yang benar (seperti produk/5 atau admin/dashboard)
+# akan diarahkan ke index.php. PHP kemudian akan memproses URL tersebut.
+RewriteRule ^(.*)$ index.php [L,QSA]
+# [L] Last: Ini adalah aturan terakhir
+# [QSA] Query String Append: Menjaga semua parameter URL (misalnya ?id=5) agar tetap ada
