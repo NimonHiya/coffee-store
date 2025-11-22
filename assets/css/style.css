@@ -6,6 +6,10 @@
     --text-color: #333;
     --bg-light: #F7F7F7;
     --bg-white: #FFFFFF;
+    --muted: #777;
+    --success: #2ecc71;
+    --danger: #e74c3c;
+    --glass: rgba(255,255,255,0.6);
 }
 
 /* --- 2. RESET & GAYA DASAR (GLOBAL STYLES) --- */
@@ -70,6 +74,8 @@ header nav h1, header nav h2 {
 header nav ul {
     list-style: none;
     display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 header nav ul li {
@@ -88,6 +94,19 @@ header nav ul li a:hover {
     color: var(--bg-white);
 }
 
+/* Responsive header: collapse spacing on small screens */
+@media (max-width: 700px) {
+    header nav {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    header nav ul {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}
+
 /* --- 4. FORMULIR DAN INPUT (LOGIN, CRUD) --- */
 form {
     background: var(--bg-white);
@@ -96,6 +115,13 @@ form {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     max-width: 500px;
+}
+
+/* Input focus styles */
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(139,69,19,0.06);
 }
 
 label {
@@ -124,20 +150,34 @@ textarea {
 }
 
 /* Button Submit Default */
-button[type="submit"], button {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
+/* Modern button system */
+.btn {
+    display: inline-block;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: 600;
     cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s;
+    text-decoration: none;
+    text-align: center;
+    border: 1px solid transparent;
+    transition: all 0.18s ease;
 }
+.btn:focus { outline: none; }
+.btn-primary {
+    background: linear-gradient(180deg,var(--primary-color),var(--accent-color));
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(74,40,0,0.12);
+}
+.btn-primary:hover { transform: translateY(-2px); }
+.btn-outline {
+    background: transparent;
+    color: var(--primary-color);
+    border-color: rgba(0,0,0,0.06);
+}
+.btn-secondary { background: var(--secondary-color); color: var(--accent-color); }
 
-button[type="submit"]:hover, button:hover {
-    background-color: var(--accent-color);
-}
+/* Utility small button */
+.btn-sm { padding: 6px 10px; font-size: .9em; border-radius: 6px; }
 
 /* --- 5. TABEL (ADMIN LISTING) --- */
 table {
@@ -210,6 +250,29 @@ footer {
     object-fit: cover;
     margin-bottom: 10px;
     border-radius: 4px;
+}
+
+/* Product badge and meta */
+.product-card .badge {
+    display: inline-block;
+    background: var(--secondary-color);
+    color: var(--accent-color);
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: .85em;
+    margin-bottom: 8px;
+}
+.product-card .meta { color: var(--muted); font-size: .9em; margin-bottom: 8px; }
+
+/* Center detail/link area */
+.product-card .detail-link { margin-top: 8px; }
+.product-card .price { margin-bottom: 12px; }
+
+/* Improve layout on small screens */
+@media (max-width: 480px) {
+    .product-card { padding: 12px; }
+    .product-card img { max-height: 140px; }
 }
 
 .product-card h4 { 
